@@ -1,4 +1,8 @@
 name,type,distance,moving_time,average_speed,max_speed,total_elevation_gain,start_date_local,average_heartrate,start_time
+Evening Run,Run,713.0,301,2.369,4.348,0.0,2022-12-08,151.1,20:56:16
+Evening Run,Run,4045.5,1239,3.265,8.458,51.0,2022-12-08,158.5,20:33:30
+Night Run,Run,673.1,257,2.619,4.705,0.0,2022-12-07,165.8,21:18:03
+Evening Run,Run,4017.7,1290,3.114,4.844,57.0,2022-12-07,155.9,20:55:04
 Evening Run,Run,4796.9,1627,2.948,5.496,50.0,2022-12-05,150.8,20:07:02
 Night Run,Run,774.9,321,2.414,4.526,1.0,2022-11-30,141.9,21:08:49
 Evening Run,Run,4020.6,1232,3.263,5.5,47.0,2022-11-30,154.7,20:45:53
