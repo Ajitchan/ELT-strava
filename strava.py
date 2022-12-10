@@ -23,18 +23,56 @@ access_token = res.json()['access_token']
 print("Access Token = {}\n".format(access_token))
 
 header = {'Authorization': 'Bearer ' + access_token}
-param = {'per_page': 200, 'page': 1}
+# param = {'per_page': 200, 'page': 1}
+# page_num = 1
+# all_activities =[]
 
+# while True:
 
+#     param = {'per_page': 200, 'page': page_num}
+#     my_dataset = requests.get(activites_url, headers=header, params=param).json()
+#     print(len(my_dataset))
+#     if len(my_dataset) == 0:
+#         print("no more activities")
+#         break
+#     if all_activities:
+#         print("all activities populating")
+#         all_activities.extend(my_dataset)
+
+#     else:
+#         print('activities are not populated')
+#         all_activities = my_dataset
+#     page_num +=1
+
+# activities = json_normalize(all_activities)
+# print(activities.head(5))
 def data_extraction():
+    param = {'per_page': 200, 'page': 1}
+    page_num = 1
+    all_activities =[]
 
-    my_dataset = requests.get(activites_url, headers=header, params=param).json()
+    while True:
 
-    activities = json_normalize(my_dataset)
+        param = {'per_page': 200, 'page': page_num}
+        my_dataset = requests.get(activites_url, headers=header, params=param).json()
+        print(len(my_dataset))
+        if len(my_dataset) == 0:
+            print("no more activities")
+            break
+        if all_activities:
+            print("all activities populating")
+            all_activities.extend(my_dataset)
+
+        else:
+            print('activities are not populated')
+            all_activities = my_dataset
+        page_num +=1
+
+    activities = json_normalize(all_activities)
     #Create new dataframe with only columns I care about
-    cols = ['name', 'upload_id', 'type', 'distance', 'moving_time',   
+    cols = ['name', 'type', 'distance', 'moving_time',   
             'average_speed', 'max_speed','total_elevation_gain',
-            'start_date_local'
+            'start_date_local','average_heartrate'
         ]
     activities = activities[cols]
 
@@ -45,11 +83,29 @@ def data_extraction():
     # Save as csv
     return activities.to_csv('/Users/ajit/Desktop/ELT-strava/activities.csv', index= False)
 
-def data_extractionwiths3():
-    
-    my_dataset = requests.get(activites_url, headers=header, params=param).json()
+# def data_extractionwiths3():
+    param = {'per_page': 200, 'page': 1}
+    page_num = 1
+    all_activities =[]
 
-    activities = json_normalize(my_dataset)
+    while True:
+
+        param = {'per_page': 200, 'page': page_num}
+        my_dataset = requests.get(activites_url, headers=header, params=param).json()
+        print(len(my_dataset))
+        if len(my_dataset) == 0:
+            print("no more activities")
+            break
+        if all_activities:
+            print("all activities populating")
+            all_activities.extend(my_dataset)
+
+        else:
+            print('activities are not populated')
+            all_activities = my_dataset
+        page_num +=1
+
+    activities = json_normalize(all_activities)
     #Create new dataframe with only columns I care about
     cols = ['name', 'upload_id', 'type', 'distance', 'moving_time',   
             'average_speed', 'max_speed','total_elevation_gain',
@@ -69,13 +125,15 @@ def data_extractionwiths3():
     response = s3_resource.Object('stravadataanalysis', filename).upload_file("/tmp/activities.csv")
     return response
 
-def lambda_hanler(event, context):
-    data_extractionwiths3()
+# def lambda_hanler(event, context):
+#     data_extractionwiths3()
 
-if __name__ == '__main__':
-    data= data_extractionwiths3()
+# if __name__ == '__main__':
+#     data= data_extractionwiths3()
 
 # # # Load back in
 # activities = pd.read_csv('activities.csv')
 
-# print(activities.head(5))
+
+
+data_extraction()
